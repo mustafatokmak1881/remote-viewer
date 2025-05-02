@@ -6,7 +6,7 @@
 ## 🌟 Features
 - **Real-time Screen Sharing** - View remote screens with adjustable quality settings
 - **Batch Command Execution** - Run multiple commands simultaneously across devices  
-- **Platform** - Runs on Windows. Also adaptable for Linux or MacOS
+- **Platform** - Runs on Windows. Also adaptable for Linux or MacOS or Raspberry Pi
 ## 📦 Installation
 
 ```bash
