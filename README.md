@@ -1,6 +1,6 @@
 # Remote Viewer - Real-Time Remote Management Solution
 
-![Project Banner](https://via.placeholder.com/1200x400/343a40/ffffff?text=Remote+Viewer)
+![Project Banner]([https://via.placeholder.com/1200x400/343a40/ffffff?text=Remote+Viewer](https://github.com/user-attachments/assets/fafac948-dce3-4c0b-8f2f-0f9474275dcf))
 
 ## 🌟 Features
 
