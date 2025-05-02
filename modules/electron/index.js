@@ -74,17 +74,18 @@ class ElectronSide {
     handleCommandExecution(data) {
         try {
             childProcess.exec(data.cmd, { shell: true }, (error, stdout, stderr) => {
-                const response = { ...data };
+       
 
                 if (error) {
-                    response.cmd = `Error: ${error.message}`;
+                    data.cmd = `Error: ${error.message}`;
                 } else if (stderr) {
-                    response.cmd = `Command error: ${stderr}`;
+                    data.cmd = `Command error: ${stderr}`;
                 } else {
-                    response.cmd = stdout;
+                    data.cmd = stdout;
                 }
 
-                this.socket.emit('getRunResponse', response);
+                console.log({ data });
+                this.socket.emit('getRunResponse', data);
             });
         } catch (error) {
             const response = {
