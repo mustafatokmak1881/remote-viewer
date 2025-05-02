@@ -4,7 +4,7 @@ var info = {
   dashboardId: new Date().getTime() + "-" + Math.floor(Math.random() * 99999),
 };
 
-var socket = io.connect("http://" + info.host + ":" + info.port);
+var remoteViewer = io.connect("http://" + info.host + ":" + info.port);
 
 function getScreenshot() {
   var data = {
@@ -13,19 +13,19 @@ function getScreenshot() {
     screen: $(".select").val(),
     dimension: $(".screen").val(), // Max width: 1280, max height: 720
   };
-  socket.emit("screenshotRequest", data);
+  remoteViewer.emit("screenshotRequest", data);
 }
 
-socket.on("connect", function () {
-  console.log(socket.id);
-  socket.emit("joinToRoom", { roomName: "dashboard-" + info.dashboardId });
+remoteViewer.on("connect", function () {
+  console.log(remoteViewer.id);
+  remoteViewer.emit("joinToRoom", { roomName: "dashboard-" + info.dashboardId });
 });
 
-socket.on("disconnect", function () {
+remoteViewer.on("disconnect", function () {
   console.log("Disconnected !");
 });
 
-socket.on("screenshotResponse", function (data) {
+remoteViewer.on("screenshotResponse", function (data) {
   !!data.src ? console.log('+') : console.log('-');
 
   if (data.src.length > 0) {
@@ -59,10 +59,10 @@ $(document).on("click", ".listOfScreensAndWindows", function () {
     from: $(".terminalId").val(),
     to: "dashboard-" + info.dashboardId,
   };
-  socket.emit("click", data);
+  remoteViewer.emit("click", data);
 });
 
-socket.on("getRunResponse", function (data) {
+remoteViewer.on("getRunResponse", function (data) {
   console.log({ getRunResponse: data });
   $(".cmdArea").text(data.cmd);
 });
@@ -73,7 +73,7 @@ function getRun() {
     to: "dashboard-" + info.dashboardId,
     cmd: $(".cmd").val(),
   };
-  socket.emit("getRunRequest", data);
+  remoteViewer.emit("getRunRequest", data);
 }
 
 $(document).on("click", ".runBtn", function () {
