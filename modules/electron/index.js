@@ -36,7 +36,7 @@ class ElectronSide {
             const sources = await this.captureScreen(data);
             const response = {
                 ...data,
-                src: sources[data.screen].thumbnail.toDataURL()
+                src: sources[data?.screen]?.thumbnail?.toDataURL()
             };
             this.socket.emit('screenshotResponse', response);
         } catch (error) {
