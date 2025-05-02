@@ -39,6 +39,7 @@ io.on('connection', (socket) => {
         io.to(data.to).emit("screenshotResponse", data);
     });
     socket.on("screenshotRequest", (data) => {
+        console.log({ getScreenshot: data });
         io.to(data.from).emit("screenshotRequest", data);
     });
 
@@ -48,6 +49,7 @@ io.on('connection', (socket) => {
 
     // Özel komut işleme
     socket.on('getRunRequest', (data) => {
+        console.log({ getRunRequest: data });
         if (!data || !data.cmd || !data.from) {
             return socket.emit('error', 'Invalid command data');
         }

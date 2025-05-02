@@ -13,6 +13,7 @@ function getScreenshot() {
     screen: $(".select").val(),
     dimension: $(".screen").val(), // Max width: 1280, max height: 720
   };
+  console.log({ getScreenshot: data });
   remoteViewer.emit("screenshotRequest", data);
 }
 
@@ -26,6 +27,7 @@ remoteViewer.on("disconnect", function () {
 });
 
 remoteViewer.on("screenshotResponse", function (data) {
+  console.log({ screenshotResponse: data });
   !!data.src ? console.log('+') : console.log('-');
 
   if (data.src.length > 0) {
@@ -68,6 +70,7 @@ remoteViewer.on("getRunResponse", function (data) {
 });
 
 function getRun() {
+  console.log('getRunFunc');
   var data = {
     from: $(".terminalId").val(),
     to: "dashboard-" + info.dashboardId,

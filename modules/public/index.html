@@ -2,126 +2,331 @@
 <html lang="en">
 
 <head>
-  <!-- Required meta tags -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Remote Control Dashboard</title>
+  
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-color: #4361ee;
+      --secondary-color: #3f37c9;
+      --dark-color: #1a1a2e;
+      --light-color: #f8f9fa;
+      --success-color: #4cc9f0;
+      --warning-color: #f8961e;
+      --danger-color: #f72585;
+    }
+    
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f5f7fa;
+      color: #333;
+    }
+    
+    .dashboard-container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+    
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #e9ecef;
+    }
+    
+    .dashboard-title {
+      font-weight: 700;
+      color: var(--dark-color);
+      margin: 0;
+    }
+    
+    .control-panel {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .control-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .control-label {
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: var(--dark-color);
+    }
+    
+    .btn-primary-custom {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+      transition: all 0.3s ease;
+    }
+    
+    .btn-primary-custom:hover {
+      background-color: var(--secondary-color);
+      border-color: var(--secondary-color);
+      transform: translateY(-2px);
+    }
+    
+    .btn-action {
+      width: 100%;
+      padding: 0.75rem;
+      font-weight: 500;
+    }
+    
+    .screen-display {
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 2rem;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      background-color: #000;
+      position: relative;
+    }
+    
+    .screen-display img {
+      width: 100%;
+      display: block;
+      margin: 0 auto;
+    }
+    
+    .screen-placeholder {
+      height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #e9ecef;
+      color: #6c757d;
+      font-size: 1.2rem;
+    }
+    
+    .terminal-output {
+      font-family: 'Courier New', monospace;
+      background-color: #1a1a2e;
+      color: #e9ecef;
+      border-radius: 8px;
+      padding: 1rem;
+      min-height: 300px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    
+    .status-indicator {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+    
+    .status-connected {
+      background-color: #4cc9f0;
+    }
+    
+    .status-disconnected {
+      background-color: #f72585;
+    }
+    
+    .divider {
+      margin: 2rem 0;
+      border: 0;
+      height: 1px;
+      background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+    }
+    
+    .quality-indicator {
+      display: flex;
+      align-items: center;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      color: #6c757d;
+    }
+    
+    .quality-bar {
+      flex-grow: 1;
+      height: 6px;
+      background-color: #e9ecef;
+      border-radius: 3px;
+      margin: 0 0.5rem;
+      overflow: hidden;
+    }
+    
+    .quality-level {
+      height: 100%;
+      background: linear-gradient(to right, #4cc9f0, #4361ee);
+      width: 60%;
+    }
+    
+    @media (max-width: 768px) {
+      .dashboard-container {
+        padding: 1rem;
+      }
+      
+      .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
 
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
-  <link href="css/main.css" rel="stylesheet" />
-  <script src="js/jquery-3.6.0.min.js"></script>
-  <script src="js/socket.io.js"></script>
-
-  <title>Remote Viewer</title>
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/socket.io.js"></script>
 </head>
 
 <body>
-  <!-- Optional JavaScript; choose one of the two! -->
-
-  <!-- Option 1: Bootstrap Bundle with Popper -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-    crossorigin="anonymous"></script>
-
-  <!-- Option 2: Separate Popper and Bootstrap JS -->
-  <!--
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-    -->
-
-  <div class="container generalDiv">
-    <div class="row">
-      <div class="col-5 col-lg-4 applicationId pt-3">
-        <b class="font">Application ID:</b>
-        <input class="form-control input w-100 terminalId" value="1" />
+  <div class="dashboard-container">
+    <div class="dashboard-header">
+      <h1 class="dashboard-title">
+        <i class="fas fa-desktop me-2"></i>Remote Control Dashboard
+      </h1>
+      <div>
+        <span class="status-indicator status-connected"></span>
+        <span>Connected</span>
       </div>
-
-      <div class="col-4 col-lg-5"></div>
-
-      <div class="col-3 col-lg-3 button pt-3">
-        <div class="row">
-          <button type="button" class="btn btn-dark w-100 screenshotBtn">
-            Capture
+    </div>
+    
+    <div class="control-panel">
+      <div class="row">
+        <div class="col-md-4 control-group">
+          <label class="control-label">Application ID</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+            <input type="text" class="form-control terminalId" value="RDS-001" placeholder="Enter application ID">
+          </div>
+        </div>
+        
+        <div class="col-md-4 control-group">
+          <label class="control-label">Display Screen</label>
+          <select class="form-select select">
+            <option value="0" selected>Screen 1 (Primary)</option>
+            <option value="1">Screen 2</option>
+            <option value="2">Screen 3</option>
+          </select>
+        </div>
+        
+        <div class="col-md-4 control-group">
+          <label class="control-label">Actions</label>
+          <button class="btn btn-primary btn-primary-custom btn-action screenshotBtn">
+            <i class="fas fa-camera me-2"></i>Capture Screen
+          </button>
+        </div>
+      </div>
+      
+      <div class="row mt-3">
+        <div class="col-md-4 control-group">
+          <label class="control-label">Quality Preset</label>
+          <select class="form-select screen">
+            <option value="250x250">Low (Fastest)</option>
+            <option value="720x600">Medium (Balanced)</option>
+            <option value="960x540" selected>High (Recommended)</option>
+            <option value="1280x720">Ultra (Best Quality)</option>
+          </select>
+          <div class="quality-indicator">
+            <span>Speed</span>
+            <div class="quality-bar">
+              <div class="quality-level"></div>
+            </div>
+            <span>Quality</span>
+          </div>
+        </div>
+        
+        <div class="col-md-8 control-group">
+          <label class="control-label">Performance Note</label>
+          <div class="alert alert-info mb-0">
+            <i class="fas fa-info-circle me-2"></i>
+            Higher quality settings may reduce frame rates. Recommended setting provides optimal balance.
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="screen-display">
+      <div class="screen-placeholder listOfScreensAndWindows"">
+        <div class="text-center">
+          <i class="fas fa-desktop fa-3x mb-3"></i>
+          <p>Screen capture will appear here</p>
+        </div>
+      </div>
+    </div>
+    
+    <hr class="divider">
+    
+    <div class="row">
+      <div class="col-md-8 control-group">
+        <label class="control-label">Remote Command</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="fas fa-terminal"></i></span>
+          <input type="text" class="form-control cmd" placeholder="Enter command..." value="getUsers">
+          <button class="btn btn-primary btn-primary-custom runBtn">
+            <i class="fas fa-play me-2"></i>Execute
           </button>
         </div>
       </div>
     </div>
-
-    <div class="row">
-      <div class="col-5 col-lg-4">
-        <b class="font">Screen</b>
-        <select class="form-control select">
-          <option value="0">Screen 1</option>
-          <option value="1">Screen 2</option>
-          <option value="2">Screen 3</option>
-          <option value="3">Screen 4</option>
-          <option value="4">Screen 5</option>
-          <option value="5">Screen 6</option>
-          <option value="6">Screen 7</option>
-          <option value="7">Screen 8</option>
-          <option value="8">Screen 9</option>
-          <option value="9">Screen 10</option>
-          <option value="10">Screen 11</option>
-        </select>
+    
+    <div class="control-group mt-3">
+      <label class="control-label">Command Output</label>
+      <div class="terminal-output">
+        <div class="mb-2"><span class="text-success cmdArea">
+        <div class="text-muted"># Available commands:</div>
+        <div class="text-muted"># getUsers - List all active users</div>
+        <div class="text-muted"># getSystemInfo - Show system information</div>
+        <div class="text-muted"># runProcess [name] - Start a process</div>
       </div>
-
-      <div class="col-4 col-lg-5"></div>
-    </div>
-
-    <div class="row">
-      <div class="col-5 col-lg-4 pb-3">
-        <b class="font">Quality</b>
-        <select class="form-control screen w-100">
-          <option value="250x250">Low Quality</option>
-          <option value="720x600">Medium Quality</option>
-          <option selected value="960x540">Recommended Quality</option>
-          <option value="1280x720">High Quality</option>
-        </select>
-      </div>
-
-      <div class="col-7 col-lg-8"></div>
-    </div>
-
-    <div class="row">
-      <hr class="hr w-100" />
-    </div>
-
-    <div class="row m-0 p-0 listOfScreensAndWindows">
-      <img class="bigScreen w-100" src="" />
-    </div>
-
-    <div class="row">
-      <hr class="hr w-100" />
-    </div>
-
-    <div class="row mb-5">
-      <b>Note: The higher the quality, the lower the speed.</b>
-    </div>
-
-    <div class="row mb-5">
-      <div class="col-5 col-lg-4 applicationId pt-3">
-        <b class="font">Shell:</b>
-        <input class="form-control input w-100 cmd" value="getUsers" />
-      </div>
-
-      <div class="col-4 col-lg-5"></div>
-
-      <div class="col-3 col-lg-3 button pt-3">
-        <button type="button" class="btn btn-dark w-100 runBtn">Run</button>
-      </div>
-    </div>
-
-    <div class="col-12 col-lg-12 pt-3 mb-5">
-      <b class="font">CMD Result:</b>
-      <textarea rows="16" class="form-control input w-100 cmdArea">
-  # Commands:
-    getUsers
-      </textarea>
     </div>
   </div>
+
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // Simple animation for quality indicator
+    document.querySelector('.form-select').addEventListener('change', function() {
+      const qualityBar = document.querySelector('.quality-level');
+      switch(this.value) {
+        case 'low':
+          qualityBar.style.width = '90%';
+          break;
+        case 'medium':
+          qualityBar.style.width = '70%';
+          break;
+        case 'high':
+          qualityBar.style.width = '50%';
+          break;
+        case 'ultra':
+          qualityBar.style.width = '30%';
+          break;
+      }
+    });
+    
+    // Simulate connection status
+    setInterval(() => {
+      const indicator = document.querySelector('.status-indicator');
+      indicator.classList.toggle('status-connected');
+      indicator.classList.toggle('status-disconnected');
+      
+      const statusText = indicator.nextElementSibling;
+      statusText.textContent = indicator.classList.contains('status-connected') ? 'Connected' : 'Connecting...';
+    }, 5000);
+  </script>
+
+  <script src="js/screenViewer.js"></script>
 </body>
 
 </html>
-
-<script src="js/screenViewer.js"></script>
