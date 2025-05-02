@@ -49,14 +49,6 @@ socket.on("screenshotResponse", function (data) {
   getScreenshot();
 });
 
-socket.on("camShotResponse", function (data) {
-  $(".listOfScreensAndWindows").html(
-    '<div class="col-12 col-sm-12 col-md-12 m-0 p-0"><img class="w-100 h-100 p-0 m-0" src=' +
-    data.src +
-    "></div>"
-  );
-  //getCamShot();
-});
 
 $(document).ready(function () {
   if (localStorage.getItem("terminalId")) {
@@ -72,13 +64,6 @@ $(document).on("click", ".screenshotBtn", function () {
   getScreenshot();
 });
 
-$(document).on("click", ".camShotBtn", function () {
-  getCamShot();
-});
-
-$(document).on("click", ".oneCamShotBtn", function () {
-  getCamShot(true);
-});
 
 $(document).on("click", ".listOfScreensAndWindows", function () {
   var data = {
@@ -86,22 +71,6 @@ $(document).on("click", ".listOfScreensAndWindows", function () {
     to: "dashboard-" + info.dashboardId,
   };
   socket.emit("click", data);
-});
-$(document).on("mousemove", ".listOfScreensAndWindows", function (e) {
-  var data = {
-    from: $(".terminalId").val(),
-    to: "dashboard-" + info.dashboardId,
-    screen: $(".select").val(),
-    webScreen: {
-      width: $(".listOfScreensAndWindows").width(),
-      height: $(".listOfScreensAndWindows").height(),
-    },
-    mousePosition: {
-      x: e.pageX - $(".listOfScreensAndWindows").offset().left,
-      y: e.pageY - $(".listOfScreensAndWindows").offset().top,
-    },
-  };
-  socket.emit("mousemove", data);
 });
 
 socket.on("getRunResponse", function (data) {

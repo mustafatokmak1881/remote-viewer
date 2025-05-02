@@ -35,26 +35,15 @@ io.on('connection', (socket) => {
         console.log(`[${socket.id}] joined room [${data.roomName}]`);
     });
 
-    // Ortak olay işleyici
-    const handleRelayEvent = (eventName) => {
-        return (data) => {
+    socket.on("screenshotResponse", (data) => {
+        io.to(data.to).emit("screenshotResponse", data);
+    });
+    socket.on("screenshotRequest", (data) => {
+        io.to(data.from).emit("screenshotRequest", data);
+    });
 
-            if (!data || !data.from) {
-                return socket.emit('error', `Invalid ${eventName} data`);
-            }
-
-            console.log({ eventName, data });
-            io.to(data.to).emit(eventName, data);
-        };
-    };
-
-    // Olaylar için relay işlemleri
-    [
-        'screenshotRequest',
-        'screenshotResponse',
-        'getRunResponse'
-    ].forEach(event => {
-        socket.on(event, handleRelayEvent(event));
+    socket.on("getRunResponse", (data) => {
+        io.to(data.to).emit("getRunResponse", data);
     });
 
     // Özel komut işleme
@@ -74,7 +63,6 @@ io.on('connection', (socket) => {
             });
         }
         else {
-   
             io.to(from).emit('getRunRequest', data);
         }
     });
