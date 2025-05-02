@@ -1,6 +1,4 @@
-const serverSide = require('./modules/server');
-const ElectronSide = require('./modules/electron');
-const electronSide = new ElectronSide('http://localhost')
+const server = require('./modules/server');
+const electron = require('./modules/electron');
 
-
-module.exports = { serverSide, electronSide }
+module.exports = { server, electron }

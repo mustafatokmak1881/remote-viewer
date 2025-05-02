@@ -1,7 +1,10 @@
 const { app, BrowserWindow } = require('electron');
-const remoteViewer = require('./modules/electron');
+const RemoteViewer = require('./index');
+const remoteViewer = new RemoteViewer.electron();
+
 
 
 app.on('ready', () => {
     const main = new BrowserWindow({});
+    remoteViewer.initialize('localhost');
 });

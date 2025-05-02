@@ -3,21 +3,22 @@ const io = require('socket.io-client');
 const childProcess = require('child_process');
 const info = require('./config');
 
-class RemoteControl {
-    constructor(domain) {
-        this.domain = domain;
+class ElectronSide {
+    constructor() {
         this.socket = null;
-        this.initialize();
     }
 
-    initialize() {
-        this.setupSocketConnection();
+    initialize(domain) {
+        this.setupSocketConnection(domain);
     }
 
-    setupSocketConnection() {
-        this.socket = io.connect(`http://${this.domain}:${info.port}`);
+    setupSocketConnection(domain) {
+        const targetAddress = `http://${domain}:${info.port}`;
+        console.log({ targetAddress });
+        this.socket = io.connect(targetAddress);
 
         this.socket.on('connect', () => {
+            console.log(`socket.id: ${this.socket.id}`);
             this.joinRoom();
         });
 
@@ -95,4 +96,4 @@ class RemoteControl {
     }
 }
 
-module.exports = RemoteControl;
+module.exports = ElectronSide;

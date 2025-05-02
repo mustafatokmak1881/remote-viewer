@@ -1,4 +1,5 @@
 const { app } = require("electron");
+const os = require("os");
 module.exports = {
-    port: 3033
+    host: "localhost", port: 3033, id: os.hostname()
 }

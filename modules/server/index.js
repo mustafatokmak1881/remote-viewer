@@ -83,10 +83,7 @@ io.on('connection', (socket) => {
     });
 });
 
-// Sunucuyu başlat
-server.listen(info.port, () => {
-    console.log(`Server listening on port ${info.port}`);
-});
+
 
 // Hata yönetimi
 server.on('error', (err) => {
@@ -97,4 +94,11 @@ process.on('unhandledRejection', (err) => {
     console.error('Unhandled rejection:', err);
 });
 
-module.exports = server;
+const start = () => {
+    // Sunucuyu başlat
+    server.listen(info.port, () => {
+        console.log(`Server listening on port ${info.port}`);
+    });
+}
+
+module.exports = {server, start};
