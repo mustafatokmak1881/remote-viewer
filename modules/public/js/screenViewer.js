@@ -16,17 +16,6 @@ function getScreenshot() {
   socket.emit("screenshotRequest", data);
 }
 
-function getCamShot(one = false) {
-  var data = {
-    from: $(".terminalId").val(),
-    to: "dashboard-" + info.dashboardId,
-    screen: $(".select").val(),
-    dimension: $(".screen").val(), // Max width: 1280, max height: 720
-    one,
-  };
-  socket.emit("camShotRequest", data);
-}
-
 socket.on("connect", function () {
   console.log(socket.id);
   socket.emit("joinToRoom", { roomName: "dashboard-" + info.dashboardId });
@@ -46,7 +35,7 @@ socket.on("screenshotResponse", function (data) {
       "></div>"
     );
   }
-  getScreenshot();
+  //getScreenshot();
 });
 
 
