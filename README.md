@@ -1,13 +1,12 @@
 # Remote Viewer - Real-Time Remote Management Solution
 
-![Project Banner]([https://via.placeholder.com/1200x400/343a40/ffffff?text=Remote+Viewer](https://github.com/user-attachments/assets/fafac948-dce3-4c0b-8f2f-0f9474275dcf))
+![image](https://github.com/user-attachments/assets/dbda295e-b0ee-4345-9829-74a5ff508843)
+
 
 ## 🌟 Features
-
 - **Real-time Screen Sharing** - View remote screens with adjustable quality settings
 - **Batch Command Execution** - Run multiple commands simultaneously across devices  
-- **Instant Communication** - Built-in messaging system for team collaboration
-- **Cross-platform** - Works on Windows, macOS, and Linux
+- **Platform** - Runs on Windows. Also adaptable for Linux or MacOS
 ## 📦 Installation
 
 ```bash
