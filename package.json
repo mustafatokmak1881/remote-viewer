@@ -1,0 +1,34 @@
+{
+  "name": "remote-viewer",
+  "version": "1.0.0",
+  "description": "This Node.js and Socket.io based app provides real-time remote management. With screen sharing, batch commands, and instant communication, it offers a user-friendly solution.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mustafatokmak1881/remote-viewer.git"
+  },
+  "keywords": [
+    "remote viewer",
+    "remote screen viewer",
+    "remote screen control",
+    "remote watch",
+    "screen watcher"
+  ],
+  "author": "Mustafa TOKMAK",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mustafatokmak1881/remote-viewer/issues"
+  },
+  "homepage": "https://github.com/mustafatokmak1881/remote-viewer#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1"
+  },
+  "devDependencies": {
+    "electron": "^36.1.0"
+  }
+}
