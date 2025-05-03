@@ -1,6 +1,6 @@
 # Remote Viewer - Real-Time Remote Management Solution
 
-![image](https://github.com/user-attachments/assets/dbda295e-b0ee-4345-9829-74a5ff508843)
+[![Remote Viewer Usage OF Web Side](https://img.youtube.com/vi/2qXgZI4iFLI/0.jpg)](https://www.youtube.com/watch?v=2qXgZI4iFLI)
 
 ## 🌟 Notes
 - ** All examples are given for localhost and tcp port 3033. Please change this to your own ip.
@@ -64,9 +64,4 @@ var info = {
   dashboardId: new Date().getTime() + "-" + Math.floor(Math.random() * 99999),
 };
 ````
-
-## 📦 Example Of Web Side
-[![Remote Viewer Usage OF Web Side](https://img.youtube.com/vi/2qXgZI4iFLI/0.jpg)](https://www.youtube.com/watch?v=2qXgZI4iFLI)
-
-
 
