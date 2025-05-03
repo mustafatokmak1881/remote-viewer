@@ -1,6 +1,6 @@
 {
   "name": "remote-viewer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "This Node.js and Socket.io based app provides real-time remote management. With screen sharing, batch commands, and instant communication, it offers a user-friendly solution.",
   "main": "index.js",
   "scripts": {
