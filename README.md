@@ -38,7 +38,19 @@ app.on('ready', () => {
 });
 ````
 
+## 📦 Usage Web Side
 ```bash
-# Clone the repository
-npm install remote-viewer
+All Web Files at here:
+https://github.com/mustafatokmak1881/remote-viewer/tree/main/modules/public
+
+
+- ** Main Functions:
+https://github.com/mustafatokmak1881/remote-viewer/blob/main/modules/public/js/screenViewer.js
+
+- **Add your ip instead of localhost:
+var info = {
+  host: "localhost",
+  port: 3033,
+  dashboardId: new Date().getTime() + "-" + Math.floor(Math.random() * 99999),
+};
 ````
