@@ -1,0 +1,6 @@
+version: '3.8'
+services:
+  remote-wiewer-server:
+    build: .
+    ports:
+      - 3033:3033
