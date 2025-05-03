@@ -11,13 +11,34 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/mustafatokmak1881/remote-viewer.git
+npm install remote-viewer
+````
 
-# Navigate to project directory
-cd remote-viewer
+## 📦 Usage Backend(NodeJS) Side
+```bash
+const { server } = require('remote-viewer');
+server.start(); // Listening 3033 tcp port as default
+````
 
-# Install dependencies
-npm install
+## 📦 Usage ElectronJS Side
+```bash
+const { app, BrowserWindow } = require('electron');
 
-# Start the server
-npm start
+// Remote Viewer Module
+const RemoteViewer = require('remote-viewer').electron;
+const remoteViewer = new RemoteViewer();
+
+
+
+app.on('ready', () => {
+    const main = new BrowserWindow();
+
+    // Enter the IP address or domain instead of localhost of the NodeJS Server
+    remoteViewer.initialize('localhost');
+});
+````
+
+```bash
+# Clone the repository
+npm install remote-viewer
+````
