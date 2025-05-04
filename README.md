@@ -12,7 +12,6 @@
 - 
 ## 📦 Installation
 ```bash
-# Clone the repository
 npm install remote-viewer
 ````
 
